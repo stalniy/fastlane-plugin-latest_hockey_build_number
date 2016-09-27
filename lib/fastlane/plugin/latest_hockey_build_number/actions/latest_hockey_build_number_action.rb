@@ -13,7 +13,7 @@ module Fastlane
         list_response = http.request(list_request)
         app_list = JSON.parse(list_response.body)['apps']
 
-        app = app_list.find { |app| app['status'] !== -1 && app['bundle_identifier'] == config[:bundle_id] }
+        app = app_list.find { |app| app['status'] != -1 && app['bundle_identifier'] == config[:bundle_id] }
 
         if app.nil?
           UI.error "No application with bundle id #{config[:bundle_id]}"
@@ -27,7 +27,7 @@ module Fastlane
         details_response = http.request(details_request)
 
         app_details = JSON.parse(details_response.body)
-        latest_build = app_details['app_versions'][0]
+        latest_build = app_details['app_versions'].find{ |version| version['status'] != -1 }
 
         if latest_build.nil?
           UI.error "The app has no versions yet"
