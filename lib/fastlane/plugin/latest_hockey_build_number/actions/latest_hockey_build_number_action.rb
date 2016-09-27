@@ -13,7 +13,7 @@ module Fastlane
         list_response = http.request(list_request)
         app_list = JSON.parse(list_response.body)['apps']
 
-        app = app_list.find { |app| app['status'] != -1 && app['bundle_identifier'] == config[:bundle_id] }
+        app = app_list.find { |app| app['bundle_identifier'] == config[:bundle_id] }
 
         if app.nil?
           UI.error "No application with bundle id #{config[:bundle_id]}"
