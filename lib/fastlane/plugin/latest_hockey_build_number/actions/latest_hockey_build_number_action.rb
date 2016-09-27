@@ -13,14 +13,14 @@ module Fastlane
         list_response = http.request(list_request)
         app_list = JSON.parse(list_response.body)['apps']
 
-        app_index = app_list.find_index { |app| app['platform'] == 'iOS' &&  app['bundle_identifier'] == config[:bundle_id] }
+        app = app_list.find { |app| app['status'] != -1 && app['bundle_identifier'] == config[:bundle_id] }
 
-        if app_index.nil? then
-            UI.error "No application with bundle id #{config[:bundle_id]}"
-            return nil
+        if app.nil?
+          UI.error "No application with bundle id #{config[:bundle_id]}"
+          return nil
         end
 
-        app_identifier = app_list[app_index]['public_identifier']
+        app_identifier = app['public_identifier']
 
         details_request = Net::HTTP::Get.new("/api/2/apps/#{app_identifier}/app_versions?page=1")
         details_request['X-HockeyAppToken'] = config[:api_token]
@@ -29,9 +29,9 @@ module Fastlane
         app_details = JSON.parse(details_response.body)
         latest_build = app_details['app_versions'][0]
 
-        if latest_build.nil? then
-            UI.error "The app has no versions yet"
-            return nil
+        if latest_build.nil?
+          UI.error "The app has no versions yet"
+          return nil
         end
 
         return latest_build['version']
@@ -63,7 +63,7 @@ module Fastlane
       end
 
       def self.is_supported?(platform)
-        [:ios].include? platform
+        [:ios, :android].include? platform
       end
     end
   end
