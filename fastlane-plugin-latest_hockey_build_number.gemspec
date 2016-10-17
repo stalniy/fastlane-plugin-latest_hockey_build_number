@@ -6,11 +6,11 @@ require 'fastlane/plugin/latest_hockey_build_number/version'
 Gem::Specification.new do |spec|
   spec.name          = 'fastlane-plugin-latest_hockey_build_number'
   spec.version       = Fastlane::LatestHockeyBuildNumber::VERSION
-  spec.author        = %q{Kirill Pahnev}
-  spec.email         = %q{kirill.pahnev@gmail.com}
+  spec.authors       = ['Sergii Stotskyi', 'Kirill Pahnev']
+  spec.email         = ['sergiy.stotskiy@gmail.com', 'kirill.pahnev@gmail.com']
 
   spec.summary       = %q{Gets latest version number of the app with the bundle id from HockeyApp}
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-latest_hockey_build_number"
+  spec.homepage      = "https://github.com/stalniy/fastlane-plugin-latest_hockey_build_number"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
