@@ -56,6 +56,7 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :bundle_id,
                                        env_name: "FL_HOCKEY_BUNDLE_ID",
                                        description: "Bundle ID of the application",
+                                       default_value: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
                                        verify_block: proc do |value|
                                          UI.user_error!("No bundle ID for Hockey given, pass using `bundle_id: 'bundle id'`") unless value and !value.empty?
                                        end),
